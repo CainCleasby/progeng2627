@@ -76,8 +76,9 @@ bool check_sequence(const std::vector<int>& v){
 // r: 3; in: 1 2 3 4 4 1 2 76 4 4 4 1 9 4 1 -7 | out: 9 4 1 -7
 // note that this function must (meaningfully) use function twod_to_oned
 void get_row(int r, const std::vector<int>& in, std::vector<int>& out){
-    for(int i = 0; i < 4; i++){
-        out.push_back(in[twod_to_oned(r, i, 4)]);
+    int rowlen = sqrt(in.size());
+    for(int i = 0; i < rowlen; i++){
+        out.push_back(in[twod_to_oned(r, i, rowlen)]);
     }
 }
 
@@ -87,8 +88,9 @@ void get_row(int r, const std::vector<int>& in, std::vector<int>& out){
 // c: 0; in: 1 2 3 4 4 1 2 76 4 4 4 1 9 4 1 -7 | out: 1 4 4 9
 // note that this function must (meaningfully) use function twod_to_oned
 void get_col(int c, const std::vector<int>& in, std::vector<int>& out){
-    for(int i = 0; i < 4; i++){
-        out.push_back(in[twod_to_oned(i, c, 4)]);
+    int rowlen = sqrt(in.size());
+    for(int i = 0; i < rowlen; i++){
+        out.push_back(in[twod_to_oned(i, c, rowlen)]);
     }
 }
 
@@ -103,10 +105,11 @@ void get_col(int c, const std::vector<int>& in, std::vector<int>& out){
 // subs: 3; in: 1 2 3 4 4 1 2 76 4 4 4 1 9 4 1 -7 | out: 4 1 1 -7
 // note that this function must (meaningfully) use function twod_to_oned
 void get_subsq(int subs, const std::vector<int>& in, std::vector<int>& out){
-    int n = sqrt(4);
-    for(int i = 0; i < n; i++){
-        for(int j = 0; j < n; j++){
-            out.push_back(in[twod_to_oned((subs/n)*n + i, (subs%n)*n + j, 4)]);
+    int rowlen = sqrt(in.size());
+    int sub = sqrt(rowlen);
+    for(int i = 0; i < sub; i++){
+        for(int j = 0; j < sub; j++){
+            out.push_back(in[twod_to_oned((subs/sub)*sub + i, (subs%sub)*sub + j, rowlen)]);
         }
     }
 }
